@@ -4,7 +4,6 @@ import { immer } from "zustand/middleware/immer";
 import { Timer } from "../../utils/types";
 
 export type TimerStoreType = {
-  isPaused: boolean;
   id: string;
   endTime: string;
 } & {
@@ -18,6 +17,7 @@ type State = {
 type Actions = {
   addNewtimer: (timer: Timer) => void;
   removeTimer: (timerId: TimerStoreType["id"]) => void;
+  updateTimer: (timerId: TimerStoreType["id"], timer: Timer) => void;
 };
 
 export const useTimerStore = create<State & Actions>()(
@@ -35,7 +35,6 @@ export const useTimerStore = create<State & Actions>()(
 
         state.timers.push({
           timer: { ...timer },
-          isPaused: false,
           id: createId(),
           endTime: new Date(end).toLocaleTimeString("fr-FR"),
         });
@@ -45,6 +44,12 @@ export const useTimerStore = create<State & Actions>()(
     removeTimer: (timerId) => {
       set((state) => {
         state.timers = state.timers.filter((t) => t.id !== timerId);
+      });
+    },
+    updateTimer: (timerId, timer) => {
+      set((state) => {
+        const index = state.timers.findIndex((t) => t.id === timerId);
+        state.timers[index].timer = timer;
       });
     },
   }))

@@ -12,7 +12,9 @@ const useSoundTimer = () => {
     }
 
     // Créer un nouvel objet audio
-    audioRef.current = new Audio(`/${source}.mp3`);
+    audioRef.current = new Audio(
+      `https://dullahan83.github.io/TimerChallenge/${source}.mp3`
+    );
     audioRef.current.volume = 0.3;
 
     // Définir un timer pour jouer le son

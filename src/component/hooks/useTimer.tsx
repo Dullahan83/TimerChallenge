@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Timer } from "../../utils/types";
-import useSoundTimer from "../store/useSoundTimer";
+import useSoundTimer from "./useSoundTimer";
 
 const defaultTimer: Timer = {
   days: 0,
@@ -14,7 +14,7 @@ const useTimer = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [isOver, setIsOver] = useState(false);
   const { playSound, stopSoundPlaying } = useSoundTimer();
-  // const [isCountdown, setIsCountdown] = useState(true);
+
   const isCountdown = true;
   const direction = isCountdown ? "-" : "+";
 
@@ -63,53 +63,34 @@ const useTimer = () => {
       const interval = setInterval(() => {
         setTimer((prev) => {
           let { days, hours, minutes, seconds, milliseconds } = prev;
-          if (isCountdown) {
-            milliseconds -= 1;
-            if (milliseconds === -1) {
-              seconds -= 1;
-              milliseconds = 99;
-            }
-            if (seconds === -1) {
-              minutes -= 1;
-              seconds = 59;
-            }
-            if (minutes === -1) {
-              hours -= 1;
-              minutes = 59;
-            }
-            if (hours === -1) {
-              days -= 1;
-              hours = 23;
-            }
-            if (
-              days === 0 &&
-              hours === 0 &&
-              minutes === 0 &&
-              seconds === 0 &&
-              milliseconds === 0
-            ) {
-              stopTimer();
-              setIsOver(true);
-              playSound("transponder_snail", 0);
-            }
-          } else {
-            milliseconds += 1;
-            if (milliseconds === 100) {
-              seconds += 1;
-              milliseconds = 0;
-            }
-            if (seconds === 60) {
-              minutes += 1;
-              seconds = 0;
-            }
-            if (minutes === 60) {
-              hours += 1;
-              minutes = 0;
-            }
-            if (hours === 24) {
-              days += 1;
-              hours = 0;
-            }
+
+          milliseconds -= 1;
+          if (milliseconds === -1) {
+            seconds -= 1;
+            milliseconds = 99;
+          }
+          if (seconds === -1) {
+            minutes -= 1;
+            seconds = 59;
+          }
+          if (minutes === -1) {
+            hours -= 1;
+            minutes = 59;
+          }
+          if (hours === -1) {
+            days -= 1;
+            hours = 23;
+          }
+          if (
+            days === 0 &&
+            hours === 0 &&
+            minutes === 0 &&
+            seconds === 0 &&
+            milliseconds === 0
+          ) {
+            stopTimer();
+            setIsOver(true);
+            playSound("transponder_snail", 0);
           }
 
           return { days, hours, minutes, seconds, milliseconds };
@@ -128,6 +109,7 @@ const useTimer = () => {
     direction,
     setTimerProps,
     setNewTimer,
+    isCountdown,
   };
 };
 

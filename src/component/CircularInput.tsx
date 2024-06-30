@@ -5,7 +5,7 @@ import {
   CircularThumb,
   CircularTrack,
 } from "react-circular-input";
-import { Timer } from "./hooks/useTimer";
+import { Timer } from "../utils/types";
 
 const CircularTimer = ({
   val,
@@ -38,7 +38,7 @@ const CircularTimer = ({
 
   return (
     <CircularInput
-      className="w-2/4 min-w-[120px]"
+      className="max-sm:w-1/4 max-sm:h-fit max-sm:min-w-[60px] max-w-[120px] w-2/4 min-w-[120px]"
       value={stepValue(value)}
       onChange={(v) => {
         if (isRunning) return;
@@ -49,7 +49,7 @@ const CircularTimer = ({
       speed={"snail"}
     >
       <CircularTrack />
-      <CircularProgress className="stroke-[var(--primary)]" />
+      <CircularProgress className="stroke-[var(--primary)] " />
       <CircularThumb className="hover:cursor-grab fill-[#00bbff]" />
 
       <text
